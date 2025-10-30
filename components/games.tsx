@@ -40,7 +40,7 @@ export function Games() {
                     alt={element.title}
                     height={200}
                     width={400}
-                    className="max-h-full max-w-full object-contain transition-opacity duration-300 group-hover:opacity-90"
+                    className="max-h-[150px] max-w-full object-contain transition-opacity duration-300 group-hover:opacity-90"
                   />
                   <div className="absolute bottom-3 md:hidden lg:block left-3 rounded-md bg-background/80 px-2 py-1 text-xs font-medium text-foreground shadow-sm backdrop-blur-sm">
                     {element.title}
@@ -54,7 +54,7 @@ export function Games() {
                   alt={element.title}
                   height={200}
                   width={400}
-                  className="max-h-full max-w-full object-contain"
+                  className="max-h-[150px] max-w-full object-contain"
                 />
                 <div className="absolute bottom-3 md:hidden lg:block left-3 rounded-md bg-background/80 px-2 py-1 text-xs font-medium text-foreground shadow-sm backdrop-blur-sm">
                   {element.title}

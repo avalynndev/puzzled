@@ -40,4 +40,11 @@ export const games: InteractiveElement[] = [
     isDisabled: false,
     backgroundUrl: "/puzzle.svg",
   },
+  {
+    id: "crossword",
+    title: "Crossword",
+    isDisabled: false,
+    backgroundUrl:
+      "https://www.nytimes.com/games-assets/v2/assets/puzzle-progress/puzzle-progress-0.svg",
+  },
 ];

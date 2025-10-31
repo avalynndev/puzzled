@@ -163,20 +163,21 @@ const Crossword: React.FC<CrosswordProps> = ({ data }) => {
   if (!grid) return <div className="text-center p-4">Loading...</div>;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 p-4 max-w-7xl mx-auto">
+    <div className="gap-8 p-4 max-w-7xl mx-auto">
       <div className="w-full lg:w-2/3">
         <div
           className="grid gap-1 aspect-square"
           style={{
-            gridTemplateColumns: `repeat(${grid.width}, minmax(0, 1fr))`,
+            gridTemplateColumns: `repeat(${grid.width}, 40px)`,
+            gridAutoRows: "40px",
           }}
         >
           {grid.cells.map((row, y) =>
             row.map((cell, x) => (
               <div
                 key={`${x}-${y}`}
-                className={`aspect-square border ${
-                  cell.letter ? "bg-white" : "bg-transparent"
+                className={`aspect-square ${
+                  cell.letter ? "bg-white border" : "bg-transparent"
                 } flex items-center justify-center relative`}
                 onClick={() => handleCellClick(y, x)}
               >
@@ -211,18 +212,10 @@ const Crossword: React.FC<CrosswordProps> = ({ data }) => {
             ))
           )}
         </div>
-        <div
-          className={`mt-4 p-2 text-center text-lg font-bold ${
-            allCorrect ? "bg-green-500 text-white" : "bg-yellow-500 text-white"
-          }`}
-        >
-          {allCorrect
-            ? "Congratulations! All answers are correct!"
-            : "Keep going! You can do it!"}
-        </div>
       </div>
-      <div className="w-full lg:w-1/3 mt-8 lg:mt-0">
-        <div className="grid grid-cols-1 gap-8">
+
+      <div className="w-full mt-8 lg:mt-4">
+        <div className="grid grid-cols-2 gap-8">
           <div>
             <h3 className="text-2xl font-bold mb-4">Across</h3>
             <ul className="list-none space-y-2">
@@ -252,6 +245,15 @@ const Crossword: React.FC<CrosswordProps> = ({ data }) => {
             </ul>
           </div>
         </div>
+      </div>
+      <div
+        className={`mt-6 p-2 text-center text-lg w-full font-bold rounded-xl ${
+          allCorrect ? "bg-secondary text-white" : "bg-primary text-white"
+        }`}
+      >
+        {allCorrect
+          ? "Congratulations! All answers are correct!"
+          : "Keep going! You can do it!!"}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { geistSans } from "@/lib/fonts";
-import RiddlesPage from "@/components/riddles";
+import { WordleUnlimited } from "@/components/wordle-unlimited";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -38,7 +38,7 @@ export default function GamePage() {
             className="text-2xl font-bold sm:text-3xl"
             variants={fadeInUp}
           >
-            Riddles
+            Wordle UNLIMITEDD
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
             desc
@@ -46,7 +46,7 @@ export default function GamePage() {
         </div>
       </motion.main>
       <div className="py-16">
-        <RiddlesPage/>
+        <WordleUnlimited />
       </div>
     </motion.main>
   );

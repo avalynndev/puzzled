@@ -108,7 +108,6 @@ const submitGroup = () => {
       <h2 className="text-xl font-bold">Connections Game</h2>
       <p>Mistakes allowed: {4 - mistakes}</p>
 
-      {/* Game buttons */}
       <div className="grid grid-cols-4 gap-2">
         {cards.map((card) => {
           const isSelected = selected.includes(card.id);
@@ -135,7 +134,6 @@ const submitGroup = () => {
         })}
       </div>
 
-      {/* Revealed groups */}
       {revealedGroups.map((groupId) => {
         const group = groupData.find((g) => g.id === groupId)!;
         return (

@@ -5,8 +5,7 @@ import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { geistSans } from "@/lib/fonts";
-import Crossword from "@/components/crossword";
-import { crosswordData } from "@/data/crossword";
+import {RiddleOfTheDay} from "@/components/riddle";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -39,15 +38,15 @@ export default function GamePage() {
             className="text-2xl font-bold sm:text-3xl"
             variants={fadeInUp}
           >
-            Riddles
+            Riddle of the Day
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            desc
+            Challenge your mind with today's riddle
           </motion.p>
         </div>
       </motion.main>
       <div className="py-16">
-        <Crossword data={crosswordData} />
+        <RiddleOfTheDay />
       </div>
     </motion.main>
   );

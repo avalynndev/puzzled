@@ -14,11 +14,9 @@ export function generateCrossword(data: CrosswordItem[]): {
   const clues: CrosswordClue[] = [];
   let clueNumber = 1;
 
-  // Find the longest word to determine initial grid size
   const maxLength = Math.max(...words.map((word) => word.length));
-  const gridSize = Math.max(maxLength * 2, 30);
+  const gridSize = Math.max(maxLength * 2, 50);
 
-  // Initialize the grid
   for (let i = 0; i < gridSize; i++) {
     grid[i] = [];
     for (let j = 0; j < gridSize; j++) {
@@ -32,19 +30,16 @@ export function generateCrossword(data: CrosswordItem[]): {
     }
   }
 
-  // Place the first word horizontally in the middle
   const firstWord = words[0];
   const startY = Math.floor(gridSize / 2);
   const startX = Math.floor((gridSize - firstWord.length) / 2);
   placeWord(grid, firstWord, startX, startY, "across", clueNumber);
   clues.push({ number: clueNumber, clue: data[0].clue, direction: "across" });
 
-  // Try to place remaining words
   for (let i = 1; i < words.length; i++) {
     const word = words[i];
     let placed = false;
 
-    // Try multiple times with different starting positions
     for (let attempt = 0; attempt < 100 && !placed; attempt++) {
       const randomY = Math.floor(Math.random() * gridSize);
       const randomX = Math.floor(Math.random() * gridSize);
@@ -105,7 +100,6 @@ export function generateCrossword(data: CrosswordItem[]): {
     }
   }
 
-  // Trim the grid
   const trimmedGrid = trimGrid(grid);
 
   return {
@@ -139,7 +133,6 @@ function placeWord(
         correct: undefined,
       };
     } else {
-      // Update existing cell for intersections
       grid[y][x].letter = word[i];
       if (i === 0) {
         grid[y][x].isStart = true;
@@ -175,7 +168,6 @@ function canPlaceWord(
       return false;
     }
 
-    // Check adjacent cells
     if (direction === "across") {
       if (i === 0 && x > 0 && grid[y][x - 1].letter !== "") return false;
       if (

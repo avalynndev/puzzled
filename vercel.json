@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/daily-word/cron",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/riddle/cron",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}

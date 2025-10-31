@@ -111,7 +111,7 @@ function TileCell({
   );
 }
 
-export function Wordle() {
+export function WordleUnlimited() {
   const [solution, setSolution] = useState<string>("");
   const [guesses, setGuesses] = useState<Cell[][]>([]);
   const [currentGuess, setCurrentGuess] = useState<Cell[]>(
@@ -132,73 +132,35 @@ export function Wordle() {
   >({});
 
   useEffect(() => {
-    fetchDailyWord();
-    loadGameState();
+    fetchUnlimitedWord();
   }, []);
 
-  const fetchDailyWord = async () => {
+  const fetchUnlimitedWord = async () => {
     try {
-      const res = await fetch("/api/daily-word");
+      const res = await fetch("/api/unlimited-word");
       const data = await res.json();
       setSolution(data.word);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching daily word:", error);
+      console.error("Error fetching word:", error);
       setLoading(false);
     }
   };
 
-  const loadGameState = () => {
-    const today = new Date().toDateString();
-    const savedDate = localStorage.getItem("wordle_date");
-
-    if (savedDate === today) {
-      const savedGuesses = localStorage.getItem("wordle_guesses");
-      const savedComplete = localStorage.getItem("wordle_complete");
-      const savedWon = localStorage.getItem("wordle_won");
-      const savedKeyboard = localStorage.getItem("wordle_keyboard");
-
-      if (savedGuesses) {
-        const parsedGuesses = JSON.parse(savedGuesses);
-        setGuesses(parsedGuesses);
-        const allRevealed = new Set<string>();
-        parsedGuesses.forEach((_: any, rowIdx: number) => {
-          for (let i = 0; i < WORD_LENGTH; i++) {
-            allRevealed.add(`${rowIdx}-${i}`);
-          }
-        });
-        setRevealedCells(allRevealed);
-      }
-      if (savedComplete === "true") {
-        setIsComplete(true);
-      }
-      if (savedWon === "true") {
-        setHasWon(true);
-      }
-      if (savedKeyboard) {
-        setKeyboardStatus(JSON.parse(savedKeyboard));
-      }
-    } else {
-      localStorage.removeItem("wordle_guesses");
-      localStorage.removeItem("wordle_complete");
-      localStorage.removeItem("wordle_won");
-      localStorage.removeItem("wordle_keyboard");
-      localStorage.setItem("wordle_date", today);
-    }
-  };
-
-  const saveGameState = (
-    newGuesses: Cell[][],
-    complete: boolean,
-    won: boolean,
-    keyboard: Record<string, "correct" | "present" | "absent">
-  ) => {
-    const today = new Date().toDateString();
-    localStorage.setItem("wordle_date", today);
-    localStorage.setItem("wordle_guesses", JSON.stringify(newGuesses));
-    localStorage.setItem("wordle_complete", complete.toString());
-    localStorage.setItem("wordle_won", won.toString());
-    localStorage.setItem("wordle_keyboard", JSON.stringify(keyboard));
+  const resetGame = async () => {
+    setLoading(true);
+    setGuesses([]);
+    setCurrentGuess(
+      Array.from({ length: WORD_LENGTH }, () => ({
+        letter: "",
+        status: undefined,
+      }))
+    );
+    setIsComplete(false);
+    setHasWon(false);
+    setRevealedCells(new Set());
+    setKeyboardStatus({});
+    await fetchUnlimitedWord();
   };
 
   const handleInput = async (key: string) => {
@@ -228,7 +190,7 @@ export function Wordle() {
 
       const newGuess: Cell[] = currentGuess.map((c) => ({
         ...c,
-        status: "absent" as const,
+        status: "absent",
       }));
       const guessLetters = currentGuess.map((c) => c.letter);
 
@@ -266,7 +228,6 @@ export function Wordle() {
       setKeyboardStatus(newKeyboardStatus);
 
       setRevealingRow(currentRowIndex);
-
       newGuess.forEach((_, idx) => {
         setTimeout(() => {
           setRevealedCells((prev) =>
@@ -274,10 +235,7 @@ export function Wordle() {
           );
         }, idx * 200);
       });
-
-      setTimeout(() => {
-        setRevealingRow(null);
-      }, WORD_LENGTH * 570);
+      setTimeout(() => setRevealingRow(null), WORD_LENGTH * 570);
 
       setCurrentGuess(
         Array.from({ length: WORD_LENGTH }, () => ({
@@ -292,15 +250,11 @@ export function Wordle() {
       if (won) {
         setIsComplete(true);
         setHasWon(true);
-        saveGameState(updatedGuesses, true, true, newKeyboardStatus);
         confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         setTimeout(() => setShowModal(true), WORD_LENGTH * 600 + 500);
       } else if (gameComplete) {
         setIsComplete(true);
-        saveGameState(updatedGuesses, true, false, newKeyboardStatus);
         setTimeout(() => setShowModal(true), WORD_LENGTH * 600 + 500);
-      } else {
-        saveGameState(updatedGuesses, false, false, newKeyboardStatus);
       }
     } else if (key === "Backspace") {
       const idx = currentGuess.findLastIndex((c) => c.letter !== "");
@@ -340,10 +294,8 @@ export function Wordle() {
   );
 
   const getCellStyle = (cell: Cell, isRevealed: boolean) => {
-    if (!isRevealed || !cell.status) {
+    if (!isRevealed || !cell.status)
       return "bg-white text-black border-gray-300";
-    }
-
     switch (cell.status) {
       case "correct":
         return "bg-green-600 text-white border-green-600";
@@ -374,7 +326,7 @@ export function Wordle() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-[60vh]">
         <ReloadIcon className="h-12 w-12 animate-spin text-foreground" />
       </div>
     );
@@ -428,7 +380,6 @@ export function Wordle() {
             autoFocus
             onKeyDown={handleKeyDown}
           />
-
           <div className="flex flex-col gap-2 mt-4">
             {KEYBOARD.map((row, i) => (
               <div key={i} className="flex justify-center gap-1">
@@ -469,12 +420,9 @@ export function Wordle() {
 
       {isComplete && hasWon && (
         <>
-          <RainbowButton
-            className="mt-4 font-bold"
-            onClick={() => (window.location.href = "/unlimited-wordle")}
-          >
-            Play Unlimited Wordle →
-          </RainbowButton>{" "}
+          <RainbowButton className="mt-4 font-bold" onClick={resetGame}>
+            Play Again →
+          </RainbowButton>
           <p>You guessed the word in {guesses.length} tries! 🎉</p>
         </>
       )}

@@ -36,7 +36,7 @@ export const games: InteractiveElement[] = [
   },
   {
     id: "riddle",
-    title: "Riddles",
+    title: "Riddle Of The Day",
     isDisabled: false,
     backgroundUrl: "/puzzle.svg",
   },
@@ -46,5 +46,18 @@ export const games: InteractiveElement[] = [
     isDisabled: false,
     backgroundUrl:
       "https://www.nytimes.com/games-assets/v2/assets/puzzle-progress/puzzle-progress-0.svg",
+  },
+  {
+    id: "wordle-unlimited",
+    title: "Wordle Unlimited",
+    isDisabled: false,
+    backgroundUrl:
+      "https://www.nytimes.com/games-assets/v2/assets/expansion-games/wordle-card-icon.svg",
+  },
+  {
+    id: "riddle-unlimited",
+    title: "Riddle Unlimited",
+    isDisabled: false,
+    backgroundUrl: "/puzzle.svg",
   },
 ];

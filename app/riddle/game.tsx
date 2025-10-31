@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { geistSans } from "@/lib/fonts";
-import {RiddleOfTheDay} from "@/components/riddle";
+import { RiddleOfTheDay } from "@/components/riddle";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

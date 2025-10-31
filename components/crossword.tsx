@@ -35,8 +35,8 @@ const Crossword: React.FC<CrosswordProps> = ({ data }) => {
                 input: value.toUpperCase(),
                 correct: value.toUpperCase() === cell.letter,
               }
-            : cell
-        )
+            : cell,
+        ),
       ),
     };
 
@@ -51,7 +51,7 @@ const Crossword: React.FC<CrosswordProps> = ({ data }) => {
 
   const checkAllCorrect = (currentGrid: CrosswordGrid) => {
     const allCorrect = currentGrid.cells.every((row) =>
-      row.every((cell) => cell.letter === "" || cell.input === cell.letter)
+      row.every((cell) => cell.letter === "" || cell.input === cell.letter),
     );
     setAllCorrect(allCorrect);
   };
@@ -69,7 +69,7 @@ const Crossword: React.FC<CrosswordProps> = ({ data }) => {
 
     const moveInDirection = (
       dy: number,
-      dx: number
+      dx: number,
     ): [number, number] | null => {
       let ny = y + dy;
       let nx = x + dx;
@@ -100,7 +100,7 @@ const Crossword: React.FC<CrosswordProps> = ({ data }) => {
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     y: number,
-    x: number
+    x: number,
   ) => {
     if (e.key === "ArrowRight") {
       setDirection("across");
@@ -202,14 +202,14 @@ const Crossword: React.FC<CrosswordProps> = ({ data }) => {
                         cell.correct === true
                           ? "bg-green-200"
                           : cell.correct === false
-                          ? "bg-red-200"
-                          : ""
+                            ? "bg-red-200"
+                            : ""
                       }`}
                     aria-label={`Row ${y + 1}, Column ${x + 1}`}
                   />
                 )}
               </div>
-            ))
+            )),
           )}
         </div>
       </div>

@@ -84,7 +84,7 @@ const Hexagon = ({
 export default function SpellBeeUnlimited() {
   const [letters, setLetters] = useState<string[]>(getRandomLetters(6));
   const [centerLetter, setCenterLetter] = useState<string>(
-    getRandomLetters(1)[0]
+    getRandomLetters(1)[0],
   );
   const [currentWord, setCurrentWord] = useState("");
   const [foundWords, setFoundWords] = useState<string[]>([]);
@@ -119,7 +119,7 @@ export default function SpellBeeUnlimited() {
 
     try {
       const res = await fetch(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`,
       );
       return res.ok;
     } catch {

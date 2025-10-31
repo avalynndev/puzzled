@@ -134,7 +134,7 @@ export default function SpellBee() {
 
     try {
       const res = await fetch(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`,
       );
       return res.ok;
     } catch {

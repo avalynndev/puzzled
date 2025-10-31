@@ -25,7 +25,7 @@ export function getDailyCrosswordData(count = 6): CrosswordItem[] {
   const seed =
     today.getFullYear() * 10000 +
     (today.getMonth() + 1) * 100 +
-    today.getDate(); 
+    today.getDate();
   const randomFn = seededRandom(seed);
 
   const usedWords = new Set<string>();
@@ -64,7 +64,6 @@ export function getDailyCrosswordData(count = 6): CrosswordItem[] {
 
   return selected;
 }
-
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

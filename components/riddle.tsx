@@ -136,9 +136,7 @@ export function RiddleOfTheDay() {
         {riddle && (
           <div className="rounded-2xl shadow-xl px-8 space-y-6">
             <div className="rounded-xl border bg-background backdrop-blur-3xl p-6">
-              <p className="text-xl leading-relaxed">
-                {riddle.riddle}
-              </p>
+              <p className="text-xl leading-relaxed">{riddle.riddle}</p>
             </div>
 
             {!completed ? (

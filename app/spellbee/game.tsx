@@ -46,7 +46,7 @@ export default function GamePage() {
         </div>
       </motion.main>
       <div className="py-16">
-        <SpellBee/>
+        <SpellBee />
       </div>
     </motion.main>
   );

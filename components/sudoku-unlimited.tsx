@@ -19,7 +19,7 @@ export default function Sudoku() {
       const data = await res.json();
       const grid = data.value;
       const parsed = grid.map((row: number[]) =>
-        row.map((n) => (n === 0 ? null : n))
+        row.map((n) => (n === 0 ? null : n)),
       );
       setBoard(parsed);
       setInitialBoard(parsed);
@@ -31,7 +31,7 @@ export default function Sudoku() {
           board: parsed,
           initialBoard: parsed,
           difficulty: data.difficulty,
-        })
+        }),
       );
     } catch (err) {
       console.error("Failed to load Sudoku:", err);
@@ -57,7 +57,7 @@ export default function Sudoku() {
     if (board.length > 0) {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ board, initialBoard, difficulty })
+        JSON.stringify({ board, initialBoard, difficulty }),
       );
     }
   }, [board, difficulty]);
@@ -73,7 +73,7 @@ export default function Sudoku() {
 
   const getStringBoard = () =>
     board.map((row) =>
-      row.map((cell) => (cell === null ? "." : cell.toString()))
+      row.map((cell) => (cell === null ? "." : cell.toString())),
     );
 
   const isValidSudoku = (board: string[][]): boolean => {
@@ -154,7 +154,7 @@ export default function Sudoku() {
                 disabled={initialBoard[rIdx][cIdx] !== null}
               />
             );
-          })
+          }),
         )}
       </div>
       <div className="grid grid-cols-2 gap-2 mt-4">

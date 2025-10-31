@@ -101,7 +101,6 @@ export const WORD_POOL: { word: string; clue: string }[] = [
   { word: "HOPE", clue: "Feeling of expectation and desire" },
 ];
 
-
 function getRandomDirection(): "across" | "down" {
   return Math.random() < 0.5 ? "across" : "down";
 }
@@ -115,7 +114,6 @@ export function getCrosswordUnlimitedData(count = 6): CrosswordItem[] {
     const { word, clue } = WORD_POOL[idx];
     const upperWord = word.toUpperCase();
 
-    // skip duplicates
     if (usedWords.has(upperWord)) continue;
 
     usedWords.add(upperWord);
@@ -144,4 +142,3 @@ export function getCrosswordUnlimitedData(count = 6): CrosswordItem[] {
 
   return selected;
 }
-

@@ -1,4 +1,9 @@
-import { Grandstander, Roboto_Condensed, Geist, Geist_Mono } from "next/font/google";
+import {
+  Grandstander,
+  Roboto_Condensed,
+  Geist,
+  Geist_Mono,
+} from "next/font/google";
 
 export const grandstander = Grandstander({
   subsets: ["vietnamese"],

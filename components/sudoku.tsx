@@ -19,20 +19,19 @@ export default function Sudoku() {
       const data = await res.json();
       const grid = data.value;
       const parsed = grid.map((row: number[]) =>
-        row.map((n) => (n === 0 ? null : n))
+        row.map((n) => (n === 0 ? null : n)),
       );
       setBoard(parsed);
       setInitialBoard(parsed);
       setDifficulty(data.difficulty || "Unknown");
 
-      // Save fetched sudoku to localStorage for next time
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({
           board: parsed,
           initialBoard: parsed,
           difficulty: data.difficulty,
-        })
+        }),
       );
     } catch (err) {
       console.error("Failed to load Sudoku:", err);
@@ -41,7 +40,6 @@ export default function Sudoku() {
     }
   }
 
-  // 🧠 Only fetch if not already stored
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -55,12 +53,11 @@ export default function Sudoku() {
     }
   }, []);
 
-  // 💾 Save user progress whenever board updates
   useEffect(() => {
     if (board.length > 0) {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ board, initialBoard, difficulty })
+        JSON.stringify({ board, initialBoard, difficulty }),
       );
     }
   }, [board, difficulty]);
@@ -76,18 +73,18 @@ export default function Sudoku() {
 
   const getStringBoard = () =>
     board.map((row) =>
-      row.map((cell) => (cell === null ? "." : cell.toString()))
+      row.map((cell) => (cell === null ? "." : cell.toString())),
     );
 
   const isValidSudoku = (board: string[][]): boolean => {
     const rows: boolean[][] = Array.from({ length: 9 }, () =>
-      Array(9).fill(false)
+      Array(9).fill(false),
     );
     const cols: boolean[][] = Array.from({ length: 9 }, () =>
-      Array(9).fill(false)
+      Array(9).fill(false),
     );
     const boxes: boolean[][] = Array.from({ length: 9 }, () =>
-      Array(9).fill(false)
+      Array(9).fill(false),
     );
 
     for (let i = 0; i < 9; i++) {
@@ -157,7 +154,7 @@ export default function Sudoku() {
                 disabled={initialBoard[rIdx][cIdx] !== null}
               />
             );
-          })
+          }),
         )}
       </div>
 

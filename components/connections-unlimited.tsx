@@ -43,7 +43,7 @@ export default function ConnectionsUnlimited() {
 
   const initializeGame = () => {
     const newCards: Card[] = gameGroups.flatMap((g) =>
-      g.cards.map((text, i) => ({ text, group: g.id, id: g.id * 10 + i }))
+      g.cards.map((text, i) => ({ text, group: g.id, id: g.id * 10 + i })),
     );
     setCards(shuffleArray(newCards));
   };
@@ -72,7 +72,7 @@ export default function ConnectionsUnlimited() {
     if (selected.length !== 4) return;
 
     const groupIds = selected.map(
-      (id) => cards.find((c) => c.id === id)?.group
+      (id) => cards.find((c) => c.id === id)?.group,
     );
 
     if (groupIds.every((g) => g === groupIds[0] && !foundGroups.includes(g!))) {
@@ -141,7 +141,7 @@ export default function ConnectionsUnlimited() {
               const isFound = foundGroups.includes(card.group);
               const isRevealed = revealedGroups.includes(card.group);
               const groupColor = gameGroups.find(
-                (g) => g.id === card.group
+                (g) => g.id === card.group,
               )?.color;
 
               if (isRevealed) return null;

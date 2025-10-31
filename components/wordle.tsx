@@ -27,7 +27,7 @@ type Cell = { letter: string; status?: "correct" | "present" | "absent" };
 const validateWord = async (word: string) => {
   try {
     const res = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`,
     );
     return res.ok;
   } catch {
@@ -78,8 +78,8 @@ function TileCell({
         isFullWordCorrect
           ? { y: [0, -15, 0] }
           : shouldShowRevealFlip
-          ? { rotateX: 180 }
-          : {}
+            ? { rotateX: 180 }
+            : {}
       }
       transition={{
         duration: 0.6,
@@ -118,7 +118,7 @@ export function Wordle() {
     Array.from({ length: WORD_LENGTH }, () => ({
       letter: "",
       status: undefined,
-    }))
+    })),
   );
   const [isComplete, setIsComplete] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -191,16 +191,16 @@ export function Wordle() {
     }
   };
 
-    useEffect(() => {
-      fetchDailyWord();
-      loadGameState();
-    }, []);
+  useEffect(() => {
+    fetchDailyWord();
+    loadGameState();
+  }, []);
 
   const saveGameState = (
     newGuesses: Cell[][],
     complete: boolean,
     won: boolean,
-    keyboard: Record<string, "correct" | "present" | "absent">
+    keyboard: Record<string, "correct" | "present" | "absent">,
   ) => {
     const today = new Date().toDateString();
     localStorage.setItem("wordle_date", today);
@@ -279,7 +279,7 @@ export function Wordle() {
       newGuess.forEach((_, idx) => {
         setTimeout(() => {
           setRevealedCells((prev) =>
-            new Set(prev).add(`${currentRowIndex}-${idx}`)
+            new Set(prev).add(`${currentRowIndex}-${idx}`),
           );
         }, idx * 200);
       });
@@ -292,7 +292,7 @@ export function Wordle() {
         Array.from({ length: WORD_LENGTH }, () => ({
           letter: "",
           status: undefined,
-        }))
+        })),
       );
 
       const won = guessWord === solution;
@@ -320,7 +320,7 @@ export function Wordle() {
       }
     } else if (key === "Delete") {
       setCurrentGuess(
-        Array.from({ length: WORD_LENGTH }, () => ({ letter: "" }))
+        Array.from({ length: WORD_LENGTH }, () => ({ letter: "" })),
       );
     } else if (/^[a-zA-Z]$/.test(key)) {
       const idx = currentGuess.findIndex((c) => c.letter === "");
@@ -345,7 +345,7 @@ export function Wordle() {
         : Array.from({ length: WORD_LENGTH }, () => ({
             letter: "",
             status: undefined,
-          })))
+          }))),
   );
 
   const getCellStyle = (cell: Cell, isRevealed: boolean) => {
@@ -448,7 +448,7 @@ export function Wordle() {
                     size="sm"
                     variant="outline"
                     className={`w-10 h-12 text-sm font-bold border-none ${getKeyStyle(
-                      key
+                      key,
                     )}`}
                     onClick={() => handleInput(key)}
                   >

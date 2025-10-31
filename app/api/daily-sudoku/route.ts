@@ -29,7 +29,7 @@ export async function GET() {
       console.error("Error fetching Sudoku:", error);
       return NextResponse.json(
         { error: "Failed to fetch Sudoku" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   } else {

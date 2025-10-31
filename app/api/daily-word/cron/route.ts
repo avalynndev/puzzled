@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const validateWord = async (word: string): Promise<boolean> => {
   try {
     const res = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`,
     );
     return res.ok;
   } catch {
@@ -15,7 +15,7 @@ async function fetchRandomWord(): Promise<string> {
   for (let attempt = 0; attempt < 10; attempt++) {
     try {
       const response = await fetch(
-        "https://random-word-api.herokuapp.com/word?length=5"
+        "https://random-word-api.herokuapp.com/word?length=5",
       );
       const words = await response.json();
       const word = words[0].toUpperCase();

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Games } from "@/components/games";
 import { Hero } from "@/components/hero";
 

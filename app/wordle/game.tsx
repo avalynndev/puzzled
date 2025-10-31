@@ -1,6 +1,5 @@
 "use client";
 
-
 import Link from "next/link";
 import { motion } from "motion/react";
 
@@ -47,7 +46,7 @@ export default function GamePage() {
         </div>
       </motion.main>
       <div className="py-16">
-       <Wordle/>
+        <Wordle />
       </div>
     </motion.main>
   );

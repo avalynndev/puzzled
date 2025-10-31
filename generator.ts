@@ -60,7 +60,7 @@ export function generateCrossword(data: CrosswordItem[]): {
                 x - intersectionIndex,
                 y,
                 direction,
-                grid[y][x - intersectionIndex].number || ++clueNumber
+                grid[y][x - intersectionIndex].number || ++clueNumber,
               );
               clues.push({
                 number: grid[y][x - intersectionIndex].number!,
@@ -79,7 +79,7 @@ export function generateCrossword(data: CrosswordItem[]): {
                 x,
                 y - intersectionIndex,
                 direction,
-                grid[y - intersectionIndex][x].number || ++clueNumber
+                grid[y - intersectionIndex][x].number || ++clueNumber,
               );
               clues.push({
                 number: grid[y - intersectionIndex][x].number!,
@@ -118,7 +118,7 @@ function placeWord(
   startX: number,
   startY: number,
   direction: "across" | "down",
-  number: number
+  number: number,
 ) {
   for (let i = 0; i < word.length; i++) {
     const x = startX + (direction === "across" ? i : 0);
@@ -149,7 +149,7 @@ function canPlaceWord(
   word: string,
   startX: number,
   startY: number,
-  direction: "across" | "down"
+  direction: "across" | "down",
 ): boolean {
   if (
     startX < 0 ||

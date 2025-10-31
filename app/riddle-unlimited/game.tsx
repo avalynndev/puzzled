@@ -30,18 +30,21 @@ export default function GamePage() {
         </Link>
       </motion.div>
       <motion.main
-        className="w-full rounded-t-lg border p-4 py-6 shadow-lg sm:py-12"
+        className="w-full rounded-t-lg border p-4 py-6 shadow-lg sm:py-12 relative"
         variants={fadeInUp}
       >
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-md bg-yellow-400 px-3 py-1 text-xs font-bold text-black shadow-md">
+          UNLIMITED
+        </div>
         <div className="text-center">
           <motion.h2
             className="text-2xl font-bold sm:text-3xl"
             variants={fadeInUp}
           >
-            Riddle UNLIMITED
+            Riddles
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            Challenge your mind with today's riddle
+            Challenge your mind with unlimited riddles!
           </motion.p>
         </div>
       </motion.main>

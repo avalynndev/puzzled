@@ -6,7 +6,65 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { geistSans } from "@/lib/fonts";
 import Crossword from "@/components/crossword";
-import { crosswordData } from "@/data/crossword";
+import { CrosswordItem } from "@/types";
+import { WORD_POOL } from "@/data/crossword";
+
+function seededRandom(seed: number) {
+  return function () {
+    const x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+  };
+}
+
+function getRandomDirection(randomFn: () => number): "across" | "down" {
+  return randomFn() < 0.5 ? "across" : "down";
+}
+
+export function getDailyCrosswordData(count = 6): CrosswordItem[] {
+  const today = new Date();
+  const seed =
+    today.getFullYear() * 10000 +
+    (today.getMonth() + 1) * 100 +
+    today.getDate(); 
+  const randomFn = seededRandom(seed);
+
+  const usedWords = new Set<string>();
+  const selected: CrosswordItem[] = [];
+
+  while (selected.length < count && usedWords.size < WORD_POOL.length) {
+    const idx = Math.floor(randomFn() * WORD_POOL.length);
+    const { word, clue } = WORD_POOL[idx];
+    const upperWord = word.toUpperCase();
+
+    if (usedWords.has(upperWord)) continue;
+
+    usedWords.add(upperWord);
+
+    selected.push({
+      word: upperWord,
+      clue,
+      direction: getRandomDirection(randomFn),
+    });
+  }
+
+  while (selected.length < count) {
+    const fallback = WORD_POOL[selected.length % WORD_POOL.length];
+    selected.push({
+      word: fallback.word.toUpperCase(),
+      clue: fallback.clue,
+      direction: getRandomDirection(randomFn),
+    });
+  }
+
+  const hasAcross = selected.some((item) => item.direction === "across");
+  const hasDown = selected.some((item) => item.direction === "down");
+
+  if (!hasAcross && selected.length > 0) selected[0].direction = "across";
+  if (!hasDown && selected.length > 1) selected[1].direction = "down";
+
+  return selected;
+}
+
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -15,6 +73,8 @@ const fadeInUp = {
 };
 
 export default function GamePage() {
+  const crosswordData = getDailyCrosswordData(20);
+
   return (
     <motion.main
       className={`${geistSans.className} mx-auto flex max-w-4xl flex-col items-center px-4 pt-10`}
@@ -39,7 +99,7 @@ export default function GamePage() {
             className="text-2xl font-bold sm:text-3xl"
             variants={fadeInUp}
           >
-            Riddles
+            Crossword
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
             desc

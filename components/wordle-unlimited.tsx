@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
@@ -130,10 +130,19 @@ export function WordleUnlimited() {
   const [keyboardStatus, setKeyboardStatus] = useState<
     Record<string, "correct" | "present" | "absent">
   >({});
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     fetchUnlimitedWord();
   }, []);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const handleFocusBack = () => {
+    inputRef.current?.focus();
+  };
 
   const fetchUnlimitedWord = async () => {
     try {
@@ -334,7 +343,7 @@ export function WordleUnlimited() {
 
   return (
     <div className="flex flex-col items-center gap-4 p-4">
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1" onClick={handleFocusBack}>
         {displayGuesses.map((row, rowIdx) => {
           const isCurrentRow = rowIdx === guesses.length;
           const shouldShake = isCurrentRow && shakeRow;
@@ -375,6 +384,7 @@ export function WordleUnlimited() {
       {!isComplete && (
         <>
           <input
+            ref={inputRef}
             type="text"
             className="w-0 h-0 opacity-0"
             autoFocus

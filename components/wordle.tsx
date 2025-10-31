@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
@@ -130,6 +130,15 @@ export function Wordle() {
   const [keyboardStatus, setKeyboardStatus] = useState<
     Record<string, "correct" | "present" | "absent">
   >({});
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const handleFocusBack = () => {
+    inputRef.current?.focus();
+  };
 
   useEffect(() => {
     fetchDailyWord();
@@ -423,6 +432,7 @@ export function Wordle() {
       {!isComplete && (
         <>
           <input
+            ref={inputRef}
             type="text"
             className="w-0 h-0 opacity-0"
             autoFocus

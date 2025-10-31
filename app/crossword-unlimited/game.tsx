@@ -5,7 +5,8 @@ import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { geistSans } from "@/lib/fonts";
-import { WordleUnlimited } from "@/components/wordle-unlimited";
+import { getCrosswordUnlimitedData } from "@/data/crossword";
+import Crossword from "@/components/crossword";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -14,6 +15,7 @@ const fadeInUp = {
 };
 
 export default function GamePage() {
+  const crosswordData = getCrosswordUnlimitedData(20);
   return (
     <motion.main
       className={`${geistSans.className} mx-auto flex max-w-4xl flex-col items-center px-4 pt-10`}
@@ -41,15 +43,15 @@ export default function GamePage() {
             className="text-2xl font-bold sm:text-3xl"
             variants={fadeInUp}
           >
-            Wordle
+            Crossword
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
             desc
           </motion.p>
         </div>
       </motion.main>
-      <div className="py-16">
-        <WordleUnlimited />
+      <div className="py-16 max-w-[300px] overlfow-y-scroll">
+        <Crossword data={crosswordData} />
       </div>
     </motion.main>
   );

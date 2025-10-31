@@ -38,7 +38,7 @@ export default function GamePage() {
             className="text-2xl font-bold sm:text-3xl"
             variants={fadeInUp}
           >
-            SpellBee
+            Spell Bee
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
             desc

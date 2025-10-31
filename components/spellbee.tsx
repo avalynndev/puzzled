@@ -87,16 +87,13 @@ export default function SpellBee() {
   const [currentWord, setCurrentWord] = useState("");
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [score, setScore] = useState(0);
-  const [message, setMessage] = useState("");
 
-  // 🎯 Load or Generate Letters (once per day)
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
     const saved = localStorage.getItem("dailyLetters");
     const savedData = saved ? JSON.parse(saved) : null;
 
     if (!savedData || savedData.date !== today) {
-      // generate fresh
       const newLetters = getRandomLetters(6);
       const newCenter = getRandomLetters(1)[0];
       const data = { letters: newLetters, center: newCenter, date: today };
@@ -149,14 +146,12 @@ export default function SpellBee() {
     const word = currentWord.toUpperCase();
     const valid = await validateWord(word);
     if (!valid) {
-      setMessage("Invalid word");
       return;
     }
 
     setFoundWords([...foundWords, word]);
     setScore(score + getPoints(word));
     setCurrentWord("");
-    setMessage("");
   };
 
   const handleReload = () => {

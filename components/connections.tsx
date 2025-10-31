@@ -122,7 +122,7 @@ export default function ConnectionsGame() {
 
       {completedToday && (
         <p className="text-yellow-500 font-medium">
-          You've already played today! Come back tomorrow.
+          You&apos;ve already played today! Come back tomorrow.
         </p>
       )}
 
@@ -270,7 +270,7 @@ export default function ConnectionsGame() {
 
 function shuffleArray<T>(array: T[], seed = Date.now()): T[] {
   const arr = [...array];
-  let random = mulberry32(seed);
+  const random = mulberry32(seed);
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];

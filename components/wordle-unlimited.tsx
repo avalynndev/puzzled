@@ -133,10 +133,6 @@ export function WordleUnlimited() {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    fetchUnlimitedWord();
-  }, []);
-
-  useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
@@ -155,6 +151,10 @@ export function WordleUnlimited() {
       setLoading(false);
     }
   };
+
+    useEffect(() => {
+      fetchUnlimitedWord();
+    }, []);
 
   const resetGame = async () => {
     setLoading(true);

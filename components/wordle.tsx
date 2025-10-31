@@ -140,11 +140,6 @@ export function Wordle() {
     inputRef.current?.focus();
   };
 
-  useEffect(() => {
-    fetchDailyWord();
-    loadGameState();
-  }, []);
-
   const fetchDailyWord = async () => {
     try {
       const res = await fetch("/api/daily-word");
@@ -195,6 +190,11 @@ export function Wordle() {
       localStorage.setItem("wordle_date", today);
     }
   };
+
+    useEffect(() => {
+      fetchDailyWord();
+      loadGameState();
+    }, []);
 
   const saveGameState = (
     newGuesses: Cell[][],
@@ -391,7 +391,7 @@ export function Wordle() {
 
   return (
     <div className="flex flex-col items-center gap-4 p-4">
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1" onClick={handleFocusBack}>
         {displayGuesses.map((row, rowIdx) => {
           const isCurrentRow = rowIdx === guesses.length;
           const shouldShake = isCurrentRow && shakeRow;

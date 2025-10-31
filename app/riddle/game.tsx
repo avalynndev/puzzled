@@ -41,7 +41,7 @@ export default function GamePage() {
             Riddle of the Day
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            Challenge your mind with today's riddle
+            Challenge your mind with today&apos;s riddle
           </motion.p>
         </div>
       </motion.main>

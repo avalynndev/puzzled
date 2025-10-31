@@ -5,8 +5,6 @@ import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { geistSans } from "@/lib/fonts";
-import SpellBee from "@/components/spellbee";
-import Sudoku from "@/components/sudoku";
 import SudokuUnlimited from "@/components/sudoku-unlimited";
 
 const fadeInUp = {

@@ -90,9 +90,7 @@ export const games: InteractiveElement[] = [
   },
 ];
 
-
-// Sample group data - you can expand this with more groups
-const allGroups = [
+export const otherGroups = [
   {
     id: 1,
     title: "Types of Fruit",

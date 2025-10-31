@@ -4,12 +4,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2, RefreshCcw } from "lucide-react";
 
-type SudokuData = {
-  value: number[][];
-  solution: number[][];
-  difficulty: string;
-};
-
 export default function Sudoku() {
   const [board, setBoard] = useState<(number | null)[][]>([]);
   const [initialBoard, setInitialBoard] = useState<(number | null)[][]>([]);

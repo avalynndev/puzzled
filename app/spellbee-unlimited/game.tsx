@@ -5,7 +5,6 @@ import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { geistSans } from "@/lib/fonts";
-import { RiddleUnlimited } from "@/components/riddle-unlimited";
 import SpellBeeUnlimited from "@/components/spellbee-unlimited";
 
 const fadeInUp = {

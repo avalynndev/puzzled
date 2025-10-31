@@ -45,7 +45,7 @@ export function Games() {
                   <div className="absolute bottom-3 md:hidden lg:block left-3 rounded-md bg-background/80 px-2 py-1 text-xs font-medium text-foreground shadow-sm backdrop-blur-sm">
                     {element.title}
                   </div>
-                  {(index === 6 || index === 7) && (
+                  {index >= 6 && index <= 11 && (
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-md bg-yellow-400 px-3 py-1 text-xs font-bold text-black shadow-md">
                       UNLIMITED
                     </div>
@@ -64,6 +64,11 @@ export function Games() {
                 <div className="absolute bottom-3 md:hidden lg:block left-3 rounded-md bg-background/80 px-2 py-1 text-xs font-medium text-foreground shadow-sm backdrop-blur-sm">
                   {element.title}
                 </div>
+                {index >= 6 && index <= 11 && (
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-md bg-yellow-400 px-3 py-1 text-xs font-bold text-black shadow-md">
+                    UNLIMITED
+                  </div>
+                )}
                 <div className="absolute inset-0 flex items-center justify-center bg-background/60 backdrop-blur-xs">
                   <LockIcon className="h-6 w-6 text-muted-foreground" />
                 </div>

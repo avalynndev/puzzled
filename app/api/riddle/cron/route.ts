@@ -20,36 +20,36 @@ async function fetchRandomRiddle() {
     const fallbackRiddles = [
       {
         riddle: "I speak without a mouth and hear without ears. What am I?",
-        answer: "An echo",
+        answer: "echo",
       },
       {
         riddle: "What has keys but can't open locks?",
-        answer: "A piano",
+        answer: "piano",
       },
       {
         riddle:
           "The more of this you take, the more you leave behind. What is it?",
-        answer: "Footsteps",
+        answer: "footsteps",
       },
       {
         riddle: "What can travel around the world while staying in a corner?",
-        answer: "A stamp",
+        answer: "stamp",
       },
       {
         riddle: "What has a head and a tail but no body?",
-        answer: "A coin",
+        answer: "coin",
       },
       {
         riddle: "What gets wet while drying?",
-        answer: "A towel",
+        answer: "towel",
       },
       {
         riddle: "What can you break, even if you never pick it up or touch it?",
-        answer: "A promise",
+        answer: "promise",
       },
       {
         riddle: "What goes up but never comes down?",
-        answer: "Your age",
+        answer: "age",
       },
     ];
 

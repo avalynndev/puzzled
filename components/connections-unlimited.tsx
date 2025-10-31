@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { RainbowButton } from "@/components/ui/rainbow-button";
+import { RefreshCw } from "lucide-react";
 import { groupData } from "@/data/connections";
 
 type Card = {
@@ -12,25 +13,22 @@ type Card = {
   id: number;
 };
 
-const getTodayKey = () => {
-  const today = new Date();
-  return `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-};
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
-const getTodayGroups = () => {
-  const today = new Date();
-  const seed =
-    today.getFullYear() * 1000 + today.getMonth() * 40 + today.getDate();
-  const shuffled = shuffleArray([...groupData], seed);
+const getRandomGroups = () => {
+  const shuffled = shuffleArray([...groupData]);
   return shuffled.slice(0, 4);
 };
 
-const initialGroups = getTodayGroups();
-const initialCards: Card[] = initialGroups.flatMap((g) =>
-  g.cards.map((text, i) => ({ text, group: g.id, id: g.id * 10 + i }))
-);
-
-export default function ConnectionsGame() {
+export default function ConnectionsUnlimited() {
+  const [gameGroups, setGameGroups] = useState(getRandomGroups());
   const [cards, setCards] = useState<Card[]>([]);
   const [selected, setSelected] = useState<number[]>([]);
   const [foundGroups, setFoundGroups] = useState<number[]>([]);
@@ -38,19 +36,27 @@ export default function ConnectionsGame() {
   const [revealedGroups, setRevealedGroups] = useState<number[]>([]);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
   const [gameOver, setGameOver] = useState(false);
-  const [completedToday, setCompletedToday] = useState(false);
-
-  const todayKey = getTodayKey();
 
   useEffect(() => {
-    const completed = localStorage.getItem("connections_completed");
-    if (completed === todayKey) {
-      setCompletedToday(true);
-      setGameOver(true);
-    } else {
-      setCards(shuffleArray(initialCards));
-    }
-  }, []);
+    initializeGame();
+  }, [gameGroups]);
+
+  const initializeGame = () => {
+    const newCards: Card[] = gameGroups.flatMap((g) =>
+      g.cards.map((text, i) => ({ text, group: g.id, id: g.id * 10 + i }))
+    );
+    setCards(shuffleArray(newCards));
+  };
+
+  const resetGame = () => {
+    setGameGroups(getRandomGroups());
+    setSelected([]);
+    setFoundGroups([]);
+    setMistakes(0);
+    setRevealedGroups([]);
+    setFeedback(null);
+    setGameOver(false);
+  };
 
   const toggleSelect = (id: number) => {
     if (gameOver) return;
@@ -78,7 +84,6 @@ export default function ConnectionsGame() {
 
       if (newFound.length === 4) {
         setGameOver(true);
-        localStorage.setItem("connections_completed", todayKey);
       }
     } else {
       setFeedback("wrong");
@@ -91,12 +96,11 @@ export default function ConnectionsGame() {
       }, 800);
 
       if (newMistakes >= 4) {
-        const remainingGroups = initialGroups
+        const remainingGroups = gameGroups
           .map((g) => g.id)
           .filter((g) => !foundGroups.includes(g));
         setRevealedGroups(remainingGroups);
         setGameOver(true);
-        localStorage.setItem("connections_completed", todayKey);
       }
       return;
     }
@@ -117,20 +121,14 @@ export default function ConnectionsGame() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Connections Game
+        Connections Unlimited
       </motion.h2>
 
-      {completedToday && (
-        <p className="text-yellow-500 font-medium">
-          You've already played today! Come back tomorrow.
-        </p>
-      )}
-
-      {!gameOver && !completedToday && (
+      {!gameOver && (
         <p className="text-sm text-gray-400">Mistakes left: {4 - mistakes}</p>
       )}
 
-      {!gameOver && !completedToday ? (
+      {!gameOver ? (
         <>
           <motion.div
             className="grid grid-cols-2 sm:grid-cols-4 gap-3"
@@ -142,7 +140,7 @@ export default function ConnectionsGame() {
               const isSelected = selected.includes(card.id);
               const isFound = foundGroups.includes(card.group);
               const isRevealed = revealedGroups.includes(card.group);
-              const groupColor = initialGroups.find(
+              const groupColor = gameGroups.find(
                 (g) => g.id === card.group
               )?.color;
 
@@ -164,7 +162,6 @@ export default function ConnectionsGame() {
                   }
                 >
                   <Button
-                    key={card.id}
                     variant={isSelected ? "default" : "outline"}
                     disabled={isFound || mistakes >= 4}
                     onClick={() => toggleSelect(card.id)}
@@ -172,8 +169,7 @@ export default function ConnectionsGame() {
                       isFound ? `${groupColor} text-white` : ""
                     }`}
                   >
-                    {" "}
-                    {card.text}{" "}
+                    {card.text}
                   </Button>
                 </motion.div>
               );
@@ -203,7 +199,7 @@ export default function ConnectionsGame() {
           )}
 
           {foundGroups.map((groupId) => {
-            const group = initialGroups.find((g) => g.id === groupId)!;
+            const group = gameGroups.find((g) => g.id === groupId)!;
             return (
               <motion.div
                 key={groupId}
@@ -231,7 +227,7 @@ export default function ConnectionsGame() {
           })}
 
           {revealedGroups.map((groupId) => {
-            const group = initialGroups.find((g) => g.id === groupId)!;
+            const group = gameGroups.find((g) => g.id === groupId)!;
             return (
               <motion.div
                 key={groupId}
@@ -259,30 +255,12 @@ export default function ConnectionsGame() {
             );
           })}
 
-          <RainbowButton variant="outline" className="mt-6">
-            Play Unlimited
+          <RainbowButton onClick={resetGame} className="mt-6">
+            <RefreshCw className="mr-2 h-4 w-4" />
+            New Game
           </RainbowButton>
         </motion.div>
       )}
     </motion.div>
   );
-}
-
-function shuffleArray<T>(array: T[], seed = Date.now()): T[] {
-  const arr = [...array];
-  let random = mulberry32(seed);
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-function mulberry32(a: number) {
-  return function () {
-    let t = (a += 0x6d2b79f5);
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
 }

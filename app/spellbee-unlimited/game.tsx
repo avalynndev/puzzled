@@ -5,7 +5,8 @@ import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { geistSans } from "@/lib/fonts";
-import ConnectionsGame from "@/components/connections";
+import { RiddleUnlimited } from "@/components/riddle-unlimited";
+import SpellBeeUnlimited from "@/components/spellbee-unlimited";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -38,15 +39,15 @@ export default function GamePage() {
             className="text-2xl font-bold sm:text-3xl"
             variants={fadeInUp}
           >
-            Connections
+            Spellbee UNLIMITED
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            desc
+            Challenge your mind with today's riddle
           </motion.p>
         </div>
       </motion.main>
       <div className="py-16">
-        <ConnectionsGame />
+        <SpellBeeUnlimited />
       </div>
     </motion.main>
   );

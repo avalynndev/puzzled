@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "./ui/badge";
@@ -81,33 +81,15 @@ const Hexagon = ({
   </motion.svg>
 );
 
-export default function SpellBee() {
-  const [letters, setLetters] = useState<string[]>([]);
-  const [centerLetter, setCenterLetter] = useState<string>("R");
+export default function SpellBeeUnlimited() {
+  const [letters, setLetters] = useState<string[]>(getRandomLetters(6));
+  const [centerLetter, setCenterLetter] = useState<string>(
+    getRandomLetters(1)[0]
+  );
   const [currentWord, setCurrentWord] = useState("");
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("");
-
-  // 🎯 Load or Generate Letters (once per day)
-  useEffect(() => {
-    const today = new Date().toISOString().split("T")[0];
-    const saved = localStorage.getItem("dailyLetters");
-    const savedData = saved ? JSON.parse(saved) : null;
-
-    if (!savedData || savedData.date !== today) {
-      // generate fresh
-      const newLetters = getRandomLetters(6);
-      const newCenter = getRandomLetters(1)[0];
-      const data = { letters: newLetters, center: newCenter, date: today };
-      localStorage.setItem("dailyLetters", JSON.stringify(data));
-      setLetters(newLetters);
-      setCenterLetter(newCenter);
-    } else {
-      setLetters(savedData.letters);
-      setCenterLetter(savedData.center);
-    }
-  }, []);
 
   const ALL_LETTERS = [...letters, centerLetter];
 
@@ -159,9 +141,17 @@ export default function SpellBee() {
     setMessage("");
   };
 
-  const handleReload = () => {
-    // shuffle visible order but keep same daily letters
+  const handleShuffle = () => {
     setLetters((prev) => [...prev].sort(() => Math.random() - 0.5));
+  };
+
+  const handleRefresh = () => {
+    setLetters(getRandomLetters(6));
+    setCenterLetter(getRandomLetters(1)[0]);
+    setFoundWords([]);
+    setScore(0);
+    setCurrentWord("");
+    setMessage("");
   };
 
   const currentLevel = LEVELS.slice()
@@ -210,10 +200,15 @@ export default function SpellBee() {
           <Button size="sm" variant="default" onClick={handleSubmit}>
             Submit
           </Button>
-          <Button size="sm" variant="secondary" onClick={handleReload}>
-            Reload
+          <Button size="sm" variant="secondary" onClick={handleShuffle}>
+            Shuffle
+          </Button>
+          <Button size="sm" variant="outline" onClick={handleRefresh}>
+            Refresh
           </Button>
         </div>
+
+        {message && <p className="mt-2 text-sm text-red-500">{message}</p>}
       </div>
 
       <div className="flex flex-col gap-4">

@@ -37,16 +37,16 @@ export default function ConnectionsUnlimited() {
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
   const [gameOver, setGameOver] = useState(false);
 
-  useEffect(() => {
-    initializeGame();
-  }, [gameGroups]);
-
   const initializeGame = () => {
     const newCards: Card[] = gameGroups.flatMap((g) =>
       g.cards.map((text, i) => ({ text, group: g.id, id: g.id * 10 + i })),
     );
     setCards(shuffleArray(newCards));
   };
+
+  useEffect(() => {
+    initializeGame();
+  }, [gameGroups]);
 
   const resetGame = () => {
     setGameGroups(getRandomGroups());

@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 
-let cachedSudoku: any = null;
+type SudokuData = {
+  value: number[][];
+  solution: number[][];
+  difficulty: string;
+};
+
+let cachedSudoku: SudokuData | null = null;
 let cachedDate = "";
 
 const SUDOKU_API = "https://sudoku-api.vercel.app/api/dosuku";

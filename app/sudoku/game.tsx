@@ -41,7 +41,7 @@ export default function GamePage() {
             Sudoku
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            desc
+            Fill the grid with numbers 1-9 following Sudoku rules
           </motion.p>
         </div>
       </motion.main>

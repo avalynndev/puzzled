@@ -44,7 +44,7 @@ export default function GamePage() {
             Wordle
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            desc
+            Guess random words with unlimited play
           </motion.p>
         </div>
       </motion.main>

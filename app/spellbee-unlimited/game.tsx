@@ -44,7 +44,8 @@ export default function GamePage() {
             Spell Bee
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            desc
+            Make as many words as you can using the letters provided with
+            unlimited play
           </motion.p>
         </div>
       </motion.main>

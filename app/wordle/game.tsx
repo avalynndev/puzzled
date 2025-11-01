@@ -41,7 +41,7 @@ export default function GamePage() {
             Wordle
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            desc
+            Guess the daily word in 6 tries
           </motion.p>
         </div>
       </motion.main>

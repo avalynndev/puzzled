@@ -28,9 +28,8 @@ export function Footer() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Drops appear{" "}
-          <span className="font-medium text-foreground">randomly</span> around
-          the screen. <br />
+          Made with ❤️ by{" "}
+          <span className="font-medium text-foreground">avalynndev</span>
         </motion.p>
         <div className="mb-6 flex flex-wrap justify-center gap-3">
           <motion.div
@@ -41,7 +40,7 @@ export function Footer() {
           >
             <Button variant="secondary" asChild>
               <a
-                href="https://github.com/avalynndev/avafun"
+                href="https://github.com/avalynndev/puzzled"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -107,7 +106,7 @@ export function Footer() {
         </motion.nav>
 
         <p className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Avafun. All rights reserved.
+          © {new Date().getFullYear()} Puzzled. All rights reserved.
         </p>
       </div>
     </motion.footer>

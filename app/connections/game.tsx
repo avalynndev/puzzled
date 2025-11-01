@@ -41,7 +41,7 @@ export default function GamePage() {
             Connections
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            desc
+            Group words that share a common theme
           </motion.p>
         </div>
       </motion.main>

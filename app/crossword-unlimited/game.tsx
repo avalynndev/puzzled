@@ -46,7 +46,7 @@ export default function GamePage() {
             Crossword
           </motion.h2>
           <motion.p className="mt-2 text-sm text-gray-500" variants={fadeInUp}>
-            desc
+            Solve unlimited crossword puzzles
           </motion.p>
         </div>
       </motion.main>

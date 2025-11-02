@@ -120,8 +120,8 @@ export default function PrivacyPolicy() {
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>Vercel:</strong> For hosting and deployment (subject to
-                Vercel&apos;s privacy policy)
+                <strong>Netlify:</strong> For hosting and deployment (subject to
+                Netlify&apos;s privacy policy)
               </li>
             </ul>
           </section>
